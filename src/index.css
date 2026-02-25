@@ -4,6 +4,10 @@
   margin: 0;
 }
 
+:root {
+  --color-main: #f03f3b;
+}
+
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

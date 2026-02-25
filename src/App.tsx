@@ -1,10 +1,11 @@
-import './App.css'
+import styles from './App.module.css'
+import Layout from './components/Layout'
 
 function App() {
   return (
-    <>
-      <div>Hello</div>
-    </>
+    <div  className={styles.container}>
+      <Layout />
+    </div>
   )
 }
 
