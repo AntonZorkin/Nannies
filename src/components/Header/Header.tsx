@@ -20,21 +20,30 @@ export default function Header({ user }: HeaderProps) {
             </NavLink>
           )}
         </nav>
-        <div className={styles.publicBtns}>
-          <button className={styles.logInBtn}>Log In</button>
-          <button className={styles.registrationBtn}>Registration</button>
-        </div>
-
-        <div className={styles.privatBtns}>
-          <div className={styles.userNameWrap}>
-            <svg className={styles.iconWrap} width="16" height="16" style={{ background: 'white' }}>
-              <use href="/public/sprite.svg#icon-person" />
-            </svg>
-            <p className={styles.userName}>{'user.name'}</p>
+        {!user && (
+          <div className={styles.publicBtns}>
+            <button className={styles.logInBtn}>Log In</button>
+            <button className={styles.registrationBtn}>Registration</button>
           </div>
+        )}
 
-          <button className={styles.logOutnBtn}>Log out</button>
-        </div>
+        {user && (
+          <div className={styles.privatBtns}>
+            <div className={styles.userNameWrap}>
+              <svg
+                className={styles.iconWrap}
+                width="16"
+                height="16"
+                style={{ background: 'white' }}
+              >
+                <use href="/public/sprite.svg#icon-person" />
+              </svg>
+              <p className={styles.userName}>{'user.name'}</p>
+            </div>
+
+            <button className={styles.logOutnBtn}>Log out</button>
+          </div>
+        )}
       </div>
 
       <button aria-label="Open menu" className={styles.burger}>

@@ -50,6 +50,10 @@
     padding: 0 128px;
   }
 
+  .headerWrap.public {
+    padding: 0 96px;
+  }
+
   .title {
     font-size: 24px;
   }
@@ -57,14 +61,17 @@
   .deskNav {
     display: flex;
     align-items: center;
+    width: 50%;
+    padding: 20 70px 20 96px;
+    /* border: 1px solid black; */
   }
-
+  /*
   .deskNav.privat {
-  }
+  } */
 
   .deskNav.public {
-    width: 533px;
     justify-content: space-between;
+    background-color: transparent;
   }
 
   .burger {
