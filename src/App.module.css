@@ -4,6 +4,13 @@
   margin: 0 auto;
 }
 
+.layoutPublic {
+  width: 100%;
+  margin: 16px;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
 button {
   cursor: pointer;
   font-weight: 500;
@@ -16,14 +23,13 @@ button {
   .container {
     max-width: 768px;
   }
+  .layoutPublic {
+    margin: 32px;
+  }
 }
 
 @media (min-width: 1200px) {
   .container {
     max-width: 1440px;
-  }
-
-  .layoutPublic {
-    background-image: '../public/bg-image.png';
   }
 }

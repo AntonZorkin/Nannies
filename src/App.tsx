@@ -27,7 +27,6 @@ function App() {
 
         <Route path="favorites" element={user ? <FavoritesPage /> : <Navigate to="/" />} />
       </Routes>
-      <Layout user={user} />
     </div>
   )
 }

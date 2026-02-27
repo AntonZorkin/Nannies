@@ -47,7 +47,7 @@ export default function Header({ user }: HeaderProps) {
       </div>
 
       <button aria-label="Open menu" className={styles.burger}>
-        <svg width="24" height="24">
+        <svg>
           <use href="/public/sprite.svg#icon-burger" />
         </svg>
       </button>
