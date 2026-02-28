@@ -1,8 +1,13 @@
 import { NavLink } from 'react-router-dom'
 import styles from './Header.module.css'
 import { LayoutProps as HeaderProps } from '../../types/auth'
+import { useState } from 'react'
 
 export default function Header({ user }: HeaderProps) {
+  const [barIsOpen, setBarIsOpen] = useState(false)
+  function openBar() {
+    setBarIsOpen(!barIsOpen)
+  }
   return (
     <header className={styles.headerWrap + ' ' + (user ? styles.privat : styles.public)}>
       <NavLink to="/" className={styles.title}>
@@ -14,11 +19,7 @@ export default function Header({ user }: HeaderProps) {
             Home
           </NavLink>
           <NavLink to="/nannies">Nannies</NavLink>
-          {user && (
-            <NavLink to="/favorites" className={styles.favorites}>
-              Favorites
-            </NavLink>
-          )}
+          {user && <NavLink to="/favorites">Favorites</NavLink>}
         </nav>
         {!user && (
           <div className={styles.publicBtns}>
@@ -46,11 +47,42 @@ export default function Header({ user }: HeaderProps) {
         )}
       </div>
 
-      <button aria-label="Open menu" className={styles.burger}>
+      <button aria-label="Open menu" className={styles.burger} onClick={openBar}>
         <svg>
           <use href="/sprite.svg#icon-burger" />
         </svg>
       </button>
+      {barIsOpen && (
+        <div className={styles.barIsOpenWrap}>
+          <button onClick={openBar} className={styles.closeBtn}>
+            &times;
+          </button>
+          <nav className={styles.barNavigation}>
+            <NavLink to="/" end className={styles.barNavLinks}>
+              Home
+            </NavLink>
+            <NavLink to="/nannies" className={styles.barNavLinks}>
+              Nannies
+            </NavLink>
+            {user && (
+              <NavLink to="/favorites" className={styles.barNavLinks}>
+                Favorites
+              </NavLink>
+            )}
+          </nav>
+          {!user && (
+            <div className={styles.barPublicBtns}>
+              <button className={styles.logInBtn}>Log In</button>
+              <button className={styles.registrationBtn}>Registration</button>
+            </div>
+          )}
+          {user && (
+            <div className={styles.privatBtns}>
+              <button className={styles.logOutnBtn}>Log out</button>
+            </div>
+          )}
+        </div>
+      )}
     </header>
   )
 }
