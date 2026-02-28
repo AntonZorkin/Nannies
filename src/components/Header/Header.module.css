@@ -111,6 +111,15 @@
   font-size: 24px;
 }
 
+.logOutnBtn {
+  border-radius: 30px;
+  padding: 14px 39px;
+  width: 240px;
+  background-color: var(--color-main);
+  color: #fbfbfb;
+  font-size: 24px;
+}
+
 @media (min-width: 768px) {
   .headerWrap {
     padding: 0 64px;
@@ -179,7 +188,6 @@
     width: 124px;
     height: 48px;
     background-color: transparent;
-    color: #fbfbfb;
     border: 1px solid rgba(251, 251, 251, 0.4);
     font-size: 16px;
   }
@@ -190,14 +198,11 @@
     font-size: 16px;
   }
 
-  .registrationBtn {
-    border-radius: 30px;
-    padding: 14px 40px;
-    width: 168px;
+  .logOutnBtn {
+    border: 1px solid rgba(251, 251, 251, 0.4);
+    width: 134px;
     height: 48px;
-    background-color: var(--color-main);
-    color: #fbfbfb;
-    border: none;
+    font-size: 16px;
   }
 
   .userNameWrap {
@@ -224,15 +229,5 @@
   .privatBtns {
     display: flex;
     gap: 24px;
-  }
-
-  .logOutnBtn {
-    border: 1px solid rgba(251, 251, 251, 0.4);
-    border-radius: 30px;
-    padding: 14px 39px;
-    width: 134px;
-    height: 48px;
-    background-color: var(--color-main);
-    color: #fbfbfb;
   }
 }

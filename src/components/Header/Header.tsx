@@ -1,13 +1,27 @@
 import { NavLink } from 'react-router-dom'
 import styles from './Header.module.css'
 import { LayoutProps as HeaderProps } from '../../types/auth'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Header({ user }: HeaderProps) {
   const [barIsOpen, setBarIsOpen] = useState(false)
   function openBar() {
     setBarIsOpen(!barIsOpen)
+    document.body.style.overflow = !barIsOpen ? 'hidden' : 'auto'
   }
+  useEffect(() => {
+    if (barIsOpen) {
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+    }
+  }, [barIsOpen])
   return (
     <header className={styles.headerWrap + ' ' + (user ? styles.privat : styles.public)}>
       <NavLink to="/" className={styles.title}>
@@ -54,18 +68,18 @@ export default function Header({ user }: HeaderProps) {
       </button>
       {barIsOpen && (
         <div className={styles.barIsOpenWrap}>
-          <button onClick={openBar} className={styles.closeBtn}>
+          <button aria-label="Close menu" onClick={openBar} className={styles.closeBtn}>
             &times;
           </button>
           <nav className={styles.barNavigation}>
-            <NavLink to="/" end className={styles.barNavLinks}>
+            <NavLink to="/" end className={styles.barNavLinks} onClick={openBar}>
               Home
             </NavLink>
-            <NavLink to="/nannies" className={styles.barNavLinks}>
+            <NavLink to="/nannies" className={styles.barNavLinks} onClick={openBar}>
               Nannies
             </NavLink>
             {user && (
-              <NavLink to="/favorites" className={styles.barNavLinks}>
+              <NavLink to="/favorites" className={styles.barNavLinks} onClick={openBar}>
                 Favorites
               </NavLink>
             )}
