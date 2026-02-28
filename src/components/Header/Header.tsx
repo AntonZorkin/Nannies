@@ -7,7 +7,6 @@ export default function Header({ user }: HeaderProps) {
   const [barIsOpen, setBarIsOpen] = useState(false)
   function openBar() {
     setBarIsOpen(!barIsOpen)
-    document.body.style.overflow = !barIsOpen ? 'hidden' : 'auto'
   }
   useEffect(() => {
     if (barIsOpen) {

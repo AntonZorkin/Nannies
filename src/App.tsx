@@ -22,10 +22,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout user={user} />}>
           <Route index element={<HomePage />} />
+          <Route path="nannies" element={user ? <NanniesPage /> : <Navigate to="/" />} />
+          <Route path="favorites" element={user ? <FavoritesPage /> : <Navigate to="/" />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
-        <Route path="nannies" element={user ? <NanniesPage /> : <Navigate to="/" />} />
-
-        <Route path="favorites" element={user ? <FavoritesPage /> : <Navigate to="/" />} />
       </Routes>
     </div>
   )
