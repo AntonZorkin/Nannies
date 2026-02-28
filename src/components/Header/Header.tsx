@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import styles from './Header.module.css'
 import { LayoutProps as HeaderProps } from '../../types/auth'
 import { useEffect, useState } from 'react'
+import Modal from '../Modal/Modal'
 
 export default function Header({ user }: HeaderProps) {
   const [barIsOpen, setBarIsOpen] = useState(false)
@@ -21,6 +22,10 @@ export default function Header({ user }: HeaderProps) {
       document.body.style.overflow = ''
     }
   }, [barIsOpen])
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  function openModal() {
+    setModalIsOpen(!modalIsOpen)
+  }
   return (
     <header className={styles.headerWrap + ' ' + (user ? styles.privat : styles.public)}>
       <NavLink to="/" className={styles.title}>
@@ -36,7 +41,9 @@ export default function Header({ user }: HeaderProps) {
         </nav>
         {!user && (
           <div className={styles.publicBtns}>
-            <button className={styles.logInBtn}>Log In</button>
+            <button className={styles.logInBtn} onClick={openModal}>
+              Log In
+            </button>
             <button className={styles.registrationBtn}>Registration</button>
           </div>
         )}
@@ -96,6 +103,7 @@ export default function Header({ user }: HeaderProps) {
           )}
         </div>
       )}
+      {modalIsOpen && <Modal openModal={openModal} />}
     </header>
   )
 }

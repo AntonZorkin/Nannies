@@ -1,0 +1,115 @@
+.modalBackDrop {
+  background-color: rgba(17, 16, 28, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+.modalWrap {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  position: relative;
+}
+
+.closeBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: transparent;
+  color: #11101c;
+  border: 1px solid rgba(206, 186, 186, 0.4);
+  position: absolute;
+  top: 24px;
+  right: 12px;
+  padding: 0;
+  font-size: 32px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: #11101c;
+  margin-bottom: 20px;
+}
+
+.modalText {
+  width: 438px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: rgba(17, 16, 28, 0.5);
+  margin-bottom: 40px;
+}
+
+.formWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input {
+  border: 1px solid rgba(17, 16, 28, 0.1);
+  border-radius: 12px;
+  padding: 16px 48px 16px 18px;
+  width: 230px;
+  height: 52px;
+}
+
+.iconBtn {
+  position: relative;
+  top: 8px;
+  right: 36px;
+  background-color: transparent;
+  border: none;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  background: none;
+  stroke: #11101c;
+  fill: none;
+}
+
+.logInBtn {
+  border-radius: 30px;
+  padding: 16px auto;
+  width: 230px;
+  height: 52px;
+  background-color: var(--color-main);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  margin-top: 40px; /*??????????????????????????????????????*/
+}
+
+@media (min-width: 768px) {
+  .modalWrap {
+    padding: 64px;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+
+  .input,
+  .inputPass {
+    width: 438px;
+  }
+
+  .logInBtn {
+    width: 438px;
+  }
+}
