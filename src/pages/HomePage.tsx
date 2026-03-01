@@ -2,7 +2,7 @@ import styles from '../styles/HomePage.module.css'
 
 const HomePage = () => {
   return (
-    <div className={styles.heroWrap}>
+    <div className={styles.heroWrap} data-hero>
       <div className={styles.heroLeft}>
         <h1 className={styles.title}>Make Life Easier for the Family:</h1>
         <p className={styles.heroText}>Find Babysitters Online for All Occasions</p>

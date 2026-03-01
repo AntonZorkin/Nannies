@@ -56,7 +56,7 @@
 
 .totalNannies {
   border-radius: 20px;
-  width: 284px;
+  width: 264px;
   height: 118px;
   background-color: #fbfbfb;
   display: flex;
@@ -123,6 +123,7 @@
   .totalNannies {
     bottom: 32px;
     right: 32px;
+    width: 284px;
   }
 }
 

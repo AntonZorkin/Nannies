@@ -6,10 +6,13 @@
 
 .layoutPublic {
   width: 100%;
-  margin: 16px;
-  border-radius: 30px;
-  overflow: hidden;
+  padding: 16px;
+  /* margin: 0; */
+  /* border-radius: 30px;
+  overflow: hidden; */
   position: relative;
+  min-height: 100vh;
+  background-color: #fbfbfb;
 }
 
 .layoutPrivat {
@@ -29,7 +32,7 @@ button {
     max-width: 768px;
   }
   .layoutPublic {
-    margin: 32px;
+    padding: 32px;
   }
 }
 
