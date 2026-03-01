@@ -33,6 +33,11 @@ export default function Header({ user }: HeaderProps) {
     setIsRegister(false)
     setModalIsOpen(true)
   }
+  const handleLogOut = () => {
+    localStorage.removeItem('user')
+    setBarIsOpen(false)
+    window.location.href = '/'
+  }
   return (
     <header className={styles.headerWrap + ' ' + (user ? styles.privat : styles.public)}>
       <NavLink to="/" className={styles.title}>
@@ -71,7 +76,9 @@ export default function Header({ user }: HeaderProps) {
               <p className={styles.userName}>{'user.name'}</p>
             </div>
 
-            <button className={styles.logOutnBtn}>Log out</button>
+            <button className={styles.logOutnBtn} onClick={handleLogOut}>
+              Log out
+            </button>
           </div>
         )}
       </div>
@@ -101,13 +108,19 @@ export default function Header({ user }: HeaderProps) {
           </nav>
           {!user && (
             <div className={styles.barPublicBtns}>
-              <button className={styles.logInBtn}>Log In</button>
-              <button className={styles.registrationBtn}>Registration</button>
+              <button className={styles.logInBtn} onClick={handleOpenLogIn}>
+                Log In
+              </button>
+              <button className={styles.registrationBtn} onClick={handleOpenSignUp}>
+                Registration
+              </button>
             </div>
           )}
           {user && (
             <div className={styles.privatBtns}>
-              <button className={styles.logOutnBtn}>Log out</button>
+              <button className={styles.logOutnBtn} onClick={handleLogOut}>
+                Log out
+              </button>
             </div>
           )}
         </div>
