@@ -3,8 +3,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,6 +17,10 @@
   flex-direction: column;
   padding: 32px;
   position: relative;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
 }
 
 .closeBtn {
@@ -29,7 +33,9 @@
   position: absolute;
   top: 24px;
   right: 12px;
-  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 32px;
 }
 
@@ -43,7 +49,7 @@
 }
 
 .modalText {
-  width: 438px;
+  width: 230px;
   font-weight: 400;
   font-size: 16px;
   line-height: 125%;
@@ -61,14 +67,14 @@
   border: 1px solid rgba(17, 16, 28, 0.1);
   border-radius: 12px;
   padding: 16px 48px 16px 18px;
-  width: 230px;
+  width: 256px;
   height: 52px;
 }
 
 .iconBtn {
   position: relative;
-  top: 8px;
-  right: 36px;
+  top: -36px;
+  right: -224px;
   background-color: transparent;
   border: none;
 }
@@ -81,10 +87,10 @@
   fill: none;
 }
 
-.logInBtn {
+.btn {
   border-radius: 30px;
   padding: 16px auto;
-  width: 230px;
+  width: 256px;
   height: 52px;
   background-color: var(--color-main);
   font-weight: 500;
@@ -92,16 +98,22 @@
   line-height: 125%;
   letter-spacing: -0.01em;
   color: #fbfbfb;
-  margin-top: 40px; /*??????????????????????????????????????*/
+  margin-top: 22px;
+  border: 1px solid var(--color-main);
+  outline: none;
 }
 
 @media (min-width: 768px) {
   .modalWrap {
     padding: 64px;
+    max-width: 566px;
   }
 
   .title {
     font-size: 40px;
+  }
+  .modalText {
+    width: 438px;
   }
 
   .input,
@@ -109,7 +121,14 @@
     width: 438px;
   }
 
-  .logInBtn {
+  .iconBtn {
+    top: -36px;
+    right: -410px;
+    background-color: transparent;
+    border: none;
+  }
+
+  .btn {
     width: 438px;
   }
 }

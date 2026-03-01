@@ -23,8 +23,15 @@ export default function Header({ user }: HeaderProps) {
     }
   }, [barIsOpen])
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  function openModal() {
-    setModalIsOpen(!modalIsOpen)
+  const [isRegister, setIsRegister] = useState(false)
+
+  const handleOpenSignUp = () => {
+    setIsRegister(true)
+    setModalIsOpen(true)
+  }
+  const handleOpenLogIn = () => {
+    setIsRegister(false)
+    setModalIsOpen(true)
   }
   return (
     <header className={styles.headerWrap + ' ' + (user ? styles.privat : styles.public)}>
@@ -41,10 +48,12 @@ export default function Header({ user }: HeaderProps) {
         </nav>
         {!user && (
           <div className={styles.publicBtns}>
-            <button className={styles.logInBtn} onClick={openModal}>
+            <button className={styles.logInBtn} onClick={handleOpenLogIn}>
               Log In
             </button>
-            <button className={styles.registrationBtn}>Registration</button>
+            <button className={styles.registrationBtn} onClick={handleOpenSignUp}>
+              Registration
+            </button>
           </div>
         )}
 
@@ -103,7 +112,7 @@ export default function Header({ user }: HeaderProps) {
           )}
         </div>
       )}
-      {modalIsOpen && <Modal openModal={openModal} />}
+      {modalIsOpen && <Modal openModal={() => setModalIsOpen(false)} isRegister={isRegister} />}
     </header>
   )
 }
