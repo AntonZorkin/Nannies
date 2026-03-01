@@ -9,7 +9,7 @@ interface ModalProps {
 export default function Modal({ openModal, isRegister }: ModalProps) {
   const [passIsVisible, setPassIsVisible] = useState(false)
 
-  const modalRef = useRef<HTMLDivElement | null>(null) // ✅ CHANGE
+  const modalRef = useRef<HTMLDivElement | null>(null)
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null)
 
   function visiblePass() {
@@ -36,7 +36,6 @@ export default function Modal({ openModal, isRegister }: ModalProps) {
   }, [openModal])
 
   useLayoutEffect(() => {
-    // ✅ CHANGE: рахуємо координати центру по data-hero
     const update = () => {
       const hero = document.querySelector('[data-hero]') as HTMLElement | null
       const modalEl = modalRef.current
@@ -53,7 +52,7 @@ export default function Modal({ openModal, isRegister }: ModalProps) {
       const left = r.left + r.width / 2 - mw / 2
       const top = r.top + r.height / 2 - mh / 2
 
-      setCoords({ left, top }) // ✅ CHANGE: без clamp
+      setCoords({ left, top })
     }
 
     update()
@@ -73,7 +72,7 @@ export default function Modal({ openModal, isRegister }: ModalProps) {
         ref={modalRef}
         style={
           coords
-            ? { position: 'fixed', left: coords.left, top: coords.top } // ✅ CHANGE
+            ? { position: 'fixed', left: coords.left, top: coords.top }
             : { position: 'fixed', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' } // ✅ CHANGE: fallback
         }
       >

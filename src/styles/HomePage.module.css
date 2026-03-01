@@ -10,6 +10,7 @@
   position: absolute;
   padding: 140px 64px 0 16px;
   z-index: 2;
+  border-radius: 30px 0 0 30px;
 }
 
 .heroRight {
@@ -20,6 +21,7 @@
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  border-radius: 30px;
 }
 
 .title {
@@ -56,7 +58,7 @@
 
 .totalNannies {
   border-radius: 20px;
-  width: 264px;
+  width: 240px;
   height: 118px;
   background-color: #fbfbfb;
   display: flex;
@@ -70,9 +72,9 @@
 }
 
 .svgWrap {
-  border-radius: 13px;
-  width: 54px;
-  height: 54px;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
   background-color: var(--color-main);
   display: flex;
   justify-content: center;
@@ -125,6 +127,11 @@
     right: 32px;
     width: 284px;
   }
+  .svgWrap {
+    border-radius: 13px;
+    width: 54px;
+    height: 54px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -136,6 +143,7 @@
   }
   .heroRight {
     width: 50%;
+    border-radius: 0 30px 30px 0;
   }
 
   .title {
