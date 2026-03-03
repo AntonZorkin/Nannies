@@ -21,7 +21,7 @@ function App() {
     <div className={styles.container}>
       <Routes>
         <Route path="/" element={<Layout user={user} setUser={setUser} />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<HomePage user={user} />} />
           <Route path="nannies" element={user ? <NanniesPage /> : <Navigate to="/" />} />
           <Route path="favorites" element={user ? <FavoritesPage /> : <Navigate to="/" />} />
           <Route path="*" element={<Navigate to="/" replace />} />
