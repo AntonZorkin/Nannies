@@ -1,10 +1,12 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import styles from './Header.module.css'
 import { LayoutProps as HeaderProps } from '../../types/auth'
 import { useEffect, useState } from 'react'
 import Modal from '../Modal/Modal'
+import { logout } from '../../services/auth'
 
-export default function Header({ user }: HeaderProps) {
+export default function Header({ user, setUser }: HeaderProps) {
+  const navigate = useNavigate()
   const [barIsOpen, setBarIsOpen] = useState(false)
   function openBar() {
     setBarIsOpen(!barIsOpen)
@@ -33,11 +35,18 @@ export default function Header({ user }: HeaderProps) {
     setIsRegister(false)
     setModalIsOpen(true)
   }
-  const handleLogOut = () => {
-    localStorage.removeItem('user')
-    setBarIsOpen(false)
-    window.location.href = '/'
+  const handleLogOut = async () => {
+    try {
+      await logout()
+      localStorage.removeItem('user')
+      setUser(null)
+      setBarIsOpen(false)
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+    }
   }
+
   return (
     <header className={styles.headerWrap + ' ' + (user ? styles.privat : styles.public)}>
       <NavLink to="/" className={styles.title}>
@@ -73,7 +82,7 @@ export default function Header({ user }: HeaderProps) {
               >
                 <use href="/public/sprite.svg#icon-person" />
               </svg>
-              <p className={styles.userName}>{'user.name'}</p>
+              <p className={styles.userName}>{user?.displayName}</p>
             </div>
 
             <button className={styles.logOutnBtn} onClick={handleLogOut}>
@@ -125,7 +134,9 @@ export default function Header({ user }: HeaderProps) {
           )}
         </div>
       )}
-      {modalIsOpen && <Modal openModal={() => setModalIsOpen(false)} isRegister={isRegister} />}
+      {modalIsOpen && (
+        <Modal openModal={() => setModalIsOpen(false)} isRegister={isRegister} setUser={setUser} />
+      )}
     </header>
   )
 }

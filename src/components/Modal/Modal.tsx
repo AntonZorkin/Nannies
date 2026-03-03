@@ -1,12 +1,16 @@
-import { useEffect, useLayoutEffect, useRef, useState, MouseEvent } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState, MouseEvent } from 'react'
 import styles from './Modal.module.css'
+import { login, register } from '../../services/auth'
+import { User } from 'firebase/auth'
 
 interface ModalProps {
   openModal: () => void
   isRegister: boolean
+  // eslint-disable-next-line no-unused-vars
+  setUser: (user: User | null) => void
 }
 
-export default function Modal({ openModal, isRegister }: ModalProps) {
+export default function Modal({ openModal, isRegister, setUser }: ModalProps) {
   const [passIsVisible, setPassIsVisible] = useState(false)
 
   const modalRef = useRef<HTMLDivElement | null>(null)
@@ -65,6 +69,25 @@ export default function Modal({ openModal, isRegister }: ModalProps) {
     }
   }, [isRegister])
 
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const { email, password, name } = Object.fromEntries(data.entries()) as any
+    try {
+      if (isRegister) {
+        const user = await register(email, password, name)
+        setUser(user)
+      } else {
+        const user = await login(email, password)
+        setUser(user)
+      }
+      openModal()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className={styles.modalBackDrop} onClick={handleBackDropClick}>
       <div
@@ -85,13 +108,16 @@ export default function Modal({ openModal, isRegister }: ModalProps) {
             ? 'Thank you for your interest in our platform! In order to register, we need some information. Please provide us with the following information.'
             : 'Welcome back! Please enter your credentials to access your account and continue your babysitter search.'}
         </p>
-        <form className={styles.formWrap}>
-          {isRegister && <input className={styles.input} type="text" placeholder="Name" />}
-          <input className={styles.input} type="email" placeholder="Email" />
+        <form className={styles.formWrap} onSubmit={handleSubmit}>
+          {isRegister && (
+            <input className={styles.input} type="text" name="name" placeholder="Name" />
+          )}
+          <input className={styles.input} type="email" name="email" placeholder="Email" />
           <div className={styles.passInputWrap}>
             <input
               className={styles.input}
               type={passIsVisible ? 'text' : 'password'}
+              name="password"
               placeholder="Password"
             />
             <button className={styles.iconBtn} type="button" onClick={visiblePass}>

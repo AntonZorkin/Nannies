@@ -3,15 +3,19 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateProfile,
 } from 'firebase/auth'
 import { auth } from '../firebase'
 
-export const register = (email: string, password: string) => {
-  return createUserWithEmailAndPassword(auth, email, password)
+export const register = async (email: string, password: string, displayName: string) => {
+  await createUserWithEmailAndPassword(auth, email, password)
+  await updateProfile(auth.currentUser!, { displayName: displayName })
+  return auth.currentUser
 }
 
-export const login = (email: string, password: string) => {
-  return signInWithEmailAndPassword(auth, email, password)
+export const login = async (email: string, password: string) => {
+  await signInWithEmailAndPassword(auth, email, password)
+  return auth.currentUser
 }
 
 export const logout = () => {

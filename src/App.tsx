@@ -20,7 +20,7 @@ function App() {
   return (
     <div className={styles.container}>
       <Routes>
-        <Route path="/" element={<Layout user={user} />}>
+        <Route path="/" element={<Layout user={user} setUser={setUser} />}>
           <Route index element={<HomePage />} />
           <Route path="nannies" element={user ? <NanniesPage /> : <Navigate to="/" />} />
           <Route path="favorites" element={user ? <FavoritesPage /> : <Navigate to="/" />} />
