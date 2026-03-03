@@ -1,9 +1,9 @@
 import styles from '../styles/HomePage.module.css'
 
-const HomePage = () => {
+const HomePage = ({ user }: { user: any }) => {
   return (
-    <div className={styles.heroWrap} data-hero>
-      <div className={styles.heroLeft}>
+    <div className={`${styles.heroWrap} ${user ? styles.privat : styles.public}`} data-hero>
+      <div className={`${styles.heroLeft} ${user ? styles.privat : styles.public}`}>
         <h1 className={styles.title}>Make Life Easier for the Family:</h1>
         <p className={styles.heroText}>Find Babysitters Online for All Occasions</p>
         <button className={styles.startBtn}>
@@ -13,7 +13,7 @@ const HomePage = () => {
           </svg>
         </button>
       </div>
-      <div className={styles.heroRight}>
+      <div className={`${styles.heroRight} ${user ? styles.privat : styles.public}`}>
         <div className={styles.totalNannies}>
           <div className={styles.svgWrap}>
             <svg width={30} height={30}>
