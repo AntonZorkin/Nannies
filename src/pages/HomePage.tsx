@@ -1,7 +1,6 @@
 import styles from '../styles/HomePage.module.css'
 
 const HomePage = ({ user }: { user: any }) => {
-  console.log('Поточний user у HomePage:', user)
   return (
     <div className={`${styles.heroWrap} ${user ? styles.privat : styles.public}`} data-hero>
       <div className={`${styles.heroLeft} ${user ? styles.privat : styles.public}`}>

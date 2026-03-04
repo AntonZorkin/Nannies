@@ -6,7 +6,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--color-main); /*!!!delete!!!!!!!*/
   position: relative;
   z-index: 10;
   border-bottom: 1px solid rgba(251, 251, 251, 0.4);
@@ -147,7 +146,7 @@
 
   .headerWrap.public {
     margin-bottom: 0;
-    padding: 20px 96px;
+    padding: 20px clamp(64px, 13.33vw - 96px, 96px); /**/
   }
 
   .title {
@@ -158,11 +157,15 @@
     display: flex;
     align-items: center;
     width: 50%;
-    padding-left: 70px;
+    padding-left: clamp(30px, 20vw - 210px, 70px);
   }
-  /*
+
   .deskNav.privat {
-  } */
+    width: 100%;
+    display: flex;
+    gap: clamp(100px, 58.5vw - 602px, 217px);
+    justify-content: flex-end;
+  }
 
   .deskNav.public {
     justify-content: space-between;
