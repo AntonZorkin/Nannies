@@ -3,7 +3,7 @@ import { db } from '../firebase'
 import { Nanny } from '../types/nanny'
 
 const fetchNannies = async (): Promise<Nanny[]> => {
-  const nanniesRef = ref(db, 'public/nannies')
+  const nanniesRef = ref(db, 'public')
   const snapshot = await get(nanniesRef)
   if (snapshot.exists()) {
     const data = snapshot.val()
