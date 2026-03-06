@@ -12,6 +12,9 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
         <div className={styles.nannyPhotoWrap}>
           <div className={styles.nannyPhoto}>
             <img src={nanny.avatar_url} alt={nanny.name} className={styles.nannyPhoto} />
+            <div className={styles.onlineStatusWrap}>
+              <span className={styles.onlineStatus}></span>
+            </div>
           </div>
         </div>
         <div className={styles.nannyInfoWrap}>

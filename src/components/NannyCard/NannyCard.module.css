@@ -19,6 +19,29 @@
   border-radius: 15px;
   width: 96px;
   height: 96px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.onlineStatusWrap {
+  width: 14px;
+  height: 14px;
+  border-radius: 100%;
+  background-color: #fbfbfb;
+  position: absolute;
+  padding: 2px;
+  top: -4px;
+  right: 0;
+}
+
+.onlineStatus {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #38cd3e;
 }
 
 .nannyInfoWrap {
