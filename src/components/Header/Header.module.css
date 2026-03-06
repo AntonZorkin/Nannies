@@ -121,6 +121,11 @@
   font-size: 24px;
 }
 
+.logOutnBtn:hover,
+.registrationBtn:hover {
+  background-color: #0f6df1;
+}
+
 @media (min-width: 768px) {
   .headerWrap {
     height: 76px;

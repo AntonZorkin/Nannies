@@ -9,7 +9,11 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
   return (
     <>
       <div className={styles.cardWrap}>
-        <div className={styles.nannyPhoto}>{nanny.avatar_url}</div>
+        <div className={styles.nannyPhotoWrap}>
+          <div className={styles.nannyPhoto}>
+            <img src={nanny.avatar_url} alt={nanny.name} className={styles.nannyPhoto} />
+          </div>
+        </div>
         <div className={styles.nannyInfoWrap}>
           <div className={styles.nannyGeneralInfo}>
             <div className={styles.nameInfo}>
@@ -18,7 +22,7 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
             </div>
             <div className={styles.locPriceWrap}>
               <div className={styles.locationWrap}>
-                <svg width={16} height={16}>
+                <svg width={16} height={16} className={styles.icon}>
                   <use href="/sprite.svg#icon-loc" />
                 </svg>
                 <p className={styles.location}>{nanny.location}</p>
@@ -29,27 +33,42 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
                 </svg>
                 <p className={styles.ratingText}>Rating: {nanny.rating}</p>
               </div>
-              <div className={styles.priceWrap}>Price / 1 hour: {nanny.price_per_hour}</div>
+              <div className={styles.priceWrap}>
+                Price / 1 hour: <span className={styles.price}>{nanny.price_per_hour}$</span>
+              </div>
               <div className={styles.faviriteIcon}>
-                <svg width={22.65} height={20}>
+                <svg width={22.65} height={20} className={styles.icon}>
                   <use href="/sprite.svg#icon-heart" />
                 </svg>
               </div>
             </div>
           </div>
-          <div className={styles.nannyInfoWrap}>
-            <div className={styles.nannyInfoFirstLine}>
-              <p className={styles.age}>Age: {ageCounter()}</p>
-              <p className={styles.experience}>Experience: {nanny.experience}</p>
-              <p className={styles.kidsAge}>Kids Age: {nanny.kids_age}</p>
+          <div className={styles.nannyDetailsWrap}>
+            <div className={styles.nannyDetailsInfo}>
+              <p className={styles.info}>
+                Age:{' '}
+                <span className={styles.spanInfo}>
+                  <u>{ageCounter()}</u>
+                </span>
+              </p>
+              <p className={styles.info}>
+                Experience: <span className={styles.spanInfo}>{nanny.experience}</span>
+              </p>
+              <p className={styles.info}>
+                Kids Age: <span className={styles.spanInfo}>{nanny.kids_age}</span>
+              </p>
             </div>
-            <div className={styles.nannyInfoSecondLine}>
-              <p className={styles.characters}>Characters: {nanny.characters}</p>
-              <p className={styles.education}>Education: {nanny.education}</p>
+            <div className={styles.nannyDetailsInfo}>
+              <p className={styles.info}>
+                Characters: <span className={styles.spanInfo}>{nanny.characters}</span>
+              </p>
+              <p className={styles.info}>
+                Education: <span className={styles.spanInfo}>{nanny.education}</span>
+              </p>
             </div>
             <div className={styles.nannyInfoDescription}>{nanny.about}</div>
           </div>
-          <button className={styles.ReadMoreBtn} type="button">
+          <button className={styles.readMoreBtn} type="button">
             Read more
           </button>
         </div>

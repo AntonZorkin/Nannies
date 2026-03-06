@@ -100,6 +100,10 @@
   outline: none;
 }
 
+.btn:hover {
+  background-color: #0f6df1;
+}
+
 @media (min-width: 768px) {
   .modalWrap {
     padding: 64px;

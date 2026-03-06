@@ -20,7 +20,7 @@ const NanniesPage = () => {
   }, [])
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.filters}>
         <p className={styles.filtersText}>Filters</p>
       </div>
@@ -28,7 +28,7 @@ const NanniesPage = () => {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <ul>
+        <ul className={styles.nanniesList}>
           {nannies.slice(0, visibleCount).map((nanny) => {
             return <NannyCard key={nanny.name} nanny={nanny} />
           })}
@@ -43,7 +43,7 @@ const NanniesPage = () => {
           Load more
         </button>
       )}
-    </>
+    </div>
   )
 }
 
