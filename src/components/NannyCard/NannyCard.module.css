@@ -121,6 +121,7 @@
 .nannyDetailsInfo {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .info {
@@ -131,6 +132,11 @@
   font-size: 16px;
   line-height: 1.5;
   color: #8a8a89;
+}
+
+.spanInfoChar {
+  color: #11101c;
+  text-transform: capitalize;
 }
 
 .spanInfo {

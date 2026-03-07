@@ -62,10 +62,9 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
               <p className={styles.info}>
                 Kids Age: <span className={styles.spanInfo}>{nanny.kids_age}</span>
               </p>
-            </div>
-            <div className={styles.nannyDetailsInfo}>
               <p className={styles.info}>
-                Characters: <span className={styles.spanInfo}>{nanny.characters}</span>
+                Characters:{' '}
+                <span className={styles.spanInfoChar}>{nanny.characters?.join(', ')}</span>
               </p>
               <p className={styles.info}>
                 Education: <span className={styles.spanInfo}>{nanny.education}</span>
