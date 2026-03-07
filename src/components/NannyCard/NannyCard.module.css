@@ -92,6 +92,18 @@
   color: #11101c;
 }
 
+.locationWrap,
+.ratingWrap {
+  position: relative;
+}
+.vertical {
+  position: absolute;
+  top: -4px;
+  right: -12px;
+  font-size: 20px;
+  color: rgba(17, 16, 28, 0.2);
+}
+
 .price {
   color: #38cd3e;
 }
@@ -161,5 +173,9 @@
   .locPriceWrap {
     display: flex;
     gap: 32px;
+  }
+
+  .vertical {
+    right: -16px;
   }
 }

@@ -29,12 +29,14 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
                   <use href="/sprite.svg#icon-loc" />
                 </svg>
                 <p className={styles.location}>{nanny.location}</p>
+                <p className={styles.vertical}>|</p>
               </div>
               <div className={styles.ratingWrap}>
                 <svg width={16} height={16}>
                   <use href="/sprite.svg#icon-Star-2" />
                 </svg>
                 <p className={styles.ratingText}>Rating: {nanny.rating}</p>
+                <p className={styles.vertical}>|</p>
               </div>
               <div className={styles.priceWrap}>
                 Price / 1 hour: <span className={styles.price}>{nanny.price_per_hour}$</span>
