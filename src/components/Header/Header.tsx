@@ -54,11 +54,33 @@ export default function Header({ user, setUser }: HeaderProps) {
       </NavLink>
       <div className={styles.deskNav + ' ' + (user ? styles.privat : styles.public)}>
         <nav className={styles.navigation}>
-          <NavLink to="/" end>
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+            }
+          >
             Home
           </NavLink>
-          <NavLink to="/nannies">Nannies</NavLink>
-          {user && <NavLink to="/favorites">Favorites</NavLink>}
+          <NavLink
+            to="/nannies"
+            className={({ isActive }) =>
+              isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+            }
+          >
+            Nannies
+          </NavLink>
+          {user && (
+            <NavLink
+              to="/favorites"
+              className={({ isActive }) =>
+                isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+              }
+            >
+              Favorites
+            </NavLink>
+          )}
         </nav>
         {!user && (
           <div className={styles.publicBtns}>
@@ -80,7 +102,7 @@ export default function Header({ user, setUser }: HeaderProps) {
                 height="16"
                 style={{ background: 'white' }}
               >
-                <use href="/public/sprite.svg#icon-person" />
+                <use href="/sprite.svg#icon-person" />
               </svg>
               <p className={styles.userName}>{user?.displayName}</p>
             </div>
