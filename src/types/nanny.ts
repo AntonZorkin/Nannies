@@ -1,7 +1,7 @@
 export interface Review {
   reviewer: string
-  raiting: number
-  commenr: string
+  rating: number
+  comment: string
 }
 
 export interface Nanny {

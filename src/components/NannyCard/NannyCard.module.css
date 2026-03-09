@@ -163,7 +163,90 @@
   stroke: black;
 }
 
+.reviewerListWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.reviewerWrap {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.reviewerIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  width: 44px;
+  height: 44px;
+  background: rgba(9, 87, 195, 0.2);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  color: #0957c3;
+}
+
+.readMoreNameRating {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.readMoreName {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: #11101c;
+}
+
+.readMoreRatingWrap {
+  display: flex;
+  gap: 8px;
+}
+
+.readMoreRatingText {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+  color: #11101c;
+}
+
+.commentText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: rgba(17, 16, 28, 0.5);
+}
+
+.appointmentBtn {
+  border-radius: 30px;
+  padding: 14px 28px;
+  width: 215px;
+  height: 48px;
+  background-color: var(--color-main);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  border: none;
+  outline: none;
+}
+
+.appointmentBtn:hover {
+  background-color: #0f6df1;
+}
+
 @media (min-width: 768px) {
+  .reviewerListWrap {
+    margin-top: 16px;
+    margin-bottom: 36px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -183,5 +266,11 @@
 
   .vertical {
     right: -16px;
+  }
+
+  .reviewerListWrap {
+    margin-top: 24px;
+    gap: 25px;
+    margin-bottom: 48px;
   }
 }

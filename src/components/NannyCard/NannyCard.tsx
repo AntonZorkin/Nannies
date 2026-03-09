@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { Nanny } from '../../types/nanny'
 import styles from './NannyCard.module.css'
 
 const NannyCard = ({ nanny }: { nanny: Nanny }) => {
+  const [isReadMoreOpen, setIsReadMoreOpen] = useState(false)
   const ageCounter = () => {
     const years = new Date().getFullYear() - new Date(nanny.birthday).getFullYear()
     return years
@@ -72,9 +74,42 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
             </div>
             <div className={styles.nannyInfoDescription}>{nanny.about}</div>
           </div>
-          <button className={styles.readMoreBtn} type="button">
-            Read more
-          </button>
+          {isReadMoreOpen ? (
+            <div className={styles.commentsWrap}>
+              <ul className={styles.reviewerListWrap}>
+                {nanny.reviews.map((review) => (
+                  <li>
+                    <div className={styles.reviewerWrap}>
+                      <div className={styles.reviewerIcon}>{review.reviewer[0]}</div>
+                      <div className={styles.readMoreNameRating}>
+                        <p className={styles.readMoreName}>{review.reviewer}</p>
+                        <div className={styles.readMoreRatingWrap}>
+                          <svg width={16} height={16}>
+                            <use href="/sprite.svg#icon-Star-2" />
+                          </svg>
+                          <p className={styles.readMoreRatingText}>{review.rating.toFixed(1)}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <p className={styles.commentText}>{review.comment}</p>
+                  </li>
+                ))}
+              </ul>
+              <button className={styles.appointmentBtn} type="button">
+                Make an appointment
+              </button>
+            </div>
+          ) : (
+            <button
+              className={styles.readMoreBtn}
+              type="button"
+              onClick={() => {
+                setIsReadMoreOpen(true)
+              }}
+            >
+              Read more
+            </button>
+          )}
         </div>
       </div>
     </>
