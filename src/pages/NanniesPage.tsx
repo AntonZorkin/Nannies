@@ -3,12 +3,12 @@ import fetchNannies from '../services/nannies'
 import { Nanny } from '../types/nanny'
 import NannyCard from '../components/NannyCard/NannyCard'
 import styles from '../styles/NanniesPage.module.css'
-import { useId } from 'react'
 
 const NanniesPage = () => {
   const [nannies, setNannies] = useState<Nanny[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [visibleCount, setVisibleCount] = useState(3)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   useEffect(() => {
     const getData = async () => {
@@ -20,8 +20,16 @@ const NanniesPage = () => {
     getData()
   }, [])
 
-  const selectId = useId()
   const [filter, setFilter] = useState('A to Z')
+  const filterOptions = [
+    'A to Z',
+    'Z to A',
+    'Less than 10$',
+    'Greater than 10$',
+    'Popular',
+    'Not popular',
+    'Show all',
+  ]
   const sortNannies = useMemo(() => {
     switch (filter) {
       case 'A to Z':
@@ -52,34 +60,32 @@ const NanniesPage = () => {
       <div className={styles.filters}>
         <p className={styles.filtersText}>Filters</p>
 
-        <select
-          className={styles.selectForm}
-          id={selectId}
-          onChange={(e) => setFilter(e.target.value)}
-          value={filter}
-        >
-          <option className={styles.selectPoints} value="A to Z">
-            A to Z
-          </option>
-          <option className={styles.selectPoints} value="Z to A">
-            Z to A
-          </option>
-          <option className={styles.selectPoints} value="Less than 10$">
-            Less than 10$
-          </option>
-          <option className={styles.selectPoints} value="Greater than 10$">
-            Greater than 10$
-          </option>
-          <option className={styles.selectPoints} value="Popular">
-            Popular
-          </option>
-          <option className={styles.selectPoints} value="Not popular">
-            Not popular
-          </option>
-          <option className={styles.selectPoints} value="Show all">
-            Show all
-          </option>
-        </select>
+        <div className={styles.dropdownWrapper}>
+          <button
+            type="button"
+            className={styles.selectForm}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {filter}
+          </button>
+
+          {isDropdownOpen && (
+            <ul className={styles.selectPointsList}>
+              {filterOptions.map((option) => (
+                <li
+                  key={option}
+                  className={styles.selectPointItem}
+                  onClick={() => {
+                    setFilter(option)
+                    setIsDropdownOpen(false)
+                  }}
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
 
       {isLoading ? (
