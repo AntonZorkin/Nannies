@@ -1,0 +1,245 @@
+.modalBackDrop {
+  background-color: rgba(17, 16, 28, 0.5);
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  min-height: 100%;
+  z-index: 99;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modalWrap {
+  background-color: #fbfbfb;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  position: relative;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  align-self: flex-start;
+}
+
+.closeBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: transparent;
+  color: #11101c;
+  position: absolute;
+  top: 24px;
+  right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  border: none;
+}
+
+.modalContentWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.titleWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #11101c;
+  width: 440px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: rgba(17, 16, 28, 0.5);
+}
+
+.nannyInfo {
+  display: flex;
+  gap: 14px;
+}
+
+.nannyPhoto {
+  border-radius: 15px;
+  width: 44px;
+  height: 44px;
+}
+
+.yourNanny {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #8a8a89;
+}
+
+.nannyName {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #11101c;
+}
+
+.formWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid rgba(17, 16, 28, 0.1);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #11101c;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #11101c;
+  opacity: 1;
+}
+
+.input {
+  width: 100%;
+  height: 52px;
+  box-sizing: border-box;
+}
+
+.textarea {
+  resize: none;
+}
+
+:global(.react-datepicker-wrapper) {
+  width: 100%;
+  position: relative;
+  display: block;
+}
+
+:global(.react-datepicker__input-container) {
+  display: block;
+  width: 100%;
+}
+
+:global(.react-datepicker__calendar-icon) {
+  position: absolute !important;
+  right: 18px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0 !important;
+  pointer-events: none;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.datePickerPopper :global(.react-datepicker__time-container) {
+  width: 151px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 20px 69px 0 rgba(0, 0, 0, 0.07);
+  border: none;
+}
+
+.datePickerPopper :global(.react-datepicker__header--time) {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(17, 16, 28, 0.1);
+  border-radius: 12px 12px 0 0;
+  padding: 16px;
+}
+
+.datePickerPopper :global(.react-datepicker__time-list) {
+  height: 130px !important;
+  padding: 0 !important;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.datePickerPopper :global(.react-datepicker__time-list-item) {
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 1.25 !important;
+  color: rgba(17, 16, 28, 0.3) !important;
+  background-color: transparent !important;
+  padding: 10px 0 !important;
+  text-align: center !important;
+  letter-spacing: 0.05em;
+}
+
+.datePickerPopper :global(.react-datepicker__time-list-item:hover),
+.datePickerPopper :global(.react-datepicker__time-list-item--selected) {
+  color: #11101c !important;
+  background-color: transparent !important;
+}
+
+.datePickerPopper :global(.react-datepicker__time-list-item--selected) {
+  color: #11101c !important;
+  background-color: transparent !important;
+  font-weight: 500;
+}
+
+.sendBtn {
+  width: 100%;
+  border-radius: 30px;
+  padding: 16px 217px;
+  width: 472px;
+  height: 52px;
+  background-color: var(--color-main);
+  border: 1px solid var(--color-main);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+}
+
+.sendBtn:hover {
+  background-color: #0f6df1;
+}
+
+@media (min-width: 768px) {
+  .modalWrap {
+    padding: 64px;
+    max-width: 600px;
+  }
+
+  .modalContentWrap {
+    gap: 40px;
+  }
+
+  .formWrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    row-gap: 16px;
+  }
+
+  .formWrap > *:nth-child(n + 5) {
+    grid-column: span 2;
+  }
+
+  .sendBtn {
+    margin-top: 24px;
+  }
+}

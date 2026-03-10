@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Nanny } from '../../types/nanny'
 import styles from './NannyCard.module.css'
+import AppointmentModal from '../AppointmentModal/AppointmentModal'
 
 const NannyCard = ({ nanny }: { nanny: Nanny }) => {
   const [isReadMoreOpen, setIsReadMoreOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const ageCounter = () => {
     const years = new Date().getFullYear() - new Date(nanny.birthday).getFullYear()
     return years
@@ -95,7 +97,11 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
                   </li>
                 ))}
               </ul>
-              <button className={styles.appointmentBtn} type="button">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className={styles.appointmentBtn}
+                type="button"
+              >
                 Make an appointment
               </button>
             </div>
@@ -112,6 +118,7 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
           )}
         </div>
       </div>
+      {isModalOpen && <AppointmentModal nanny={nanny} onClose={() => setIsModalOpen(false)} />}
     </>
   )
 }
