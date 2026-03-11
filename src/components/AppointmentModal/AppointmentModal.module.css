@@ -9,6 +9,8 @@
   display: flex;
   justify-content: center;
   padding: 24px;
+  overflow-y: auto;
+  align-items: flex-start;
 }
 
 .modalWrap {
@@ -58,7 +60,7 @@
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: #11101c;
-  width: 440px;
+  max-width: 440px;
 }
 
 .text {
@@ -203,7 +205,6 @@
   width: 100%;
   border-radius: 30px;
   padding: 16px 217px;
-  width: 472px;
   height: 52px;
   background-color: var(--color-main);
   border: 1px solid var(--color-main);
@@ -216,6 +217,17 @@
 
 .sendBtn:hover {
   background-color: #0f6df1;
+}
+
+.error {
+  color: #ef2447;
+  font-size: 12px;
+  margin-top: 4px;
+  grid-column: span 1;
+}
+
+.inputError {
+  border-color: #ef2447 !important;
 }
 
 @media (min-width: 768px) {
@@ -241,5 +253,14 @@
 
   .sendBtn {
     margin-top: 24px;
+  }
+
+  .error {
+    grid-column: span 2;
+  }
+
+  .formWrap > div:nth-child(n + 5),
+  .sendBtn {
+    grid-column: span 2;
   }
 }

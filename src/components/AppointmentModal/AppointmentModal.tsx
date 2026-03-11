@@ -1,10 +1,14 @@
 import { createPortal } from 'react-dom'
-import React, { MouseEvent, useRef, useState } from 'react'
+import React, { MouseEvent, useRef } from 'react'
 import styles from './AppointmentModal.module.css'
 import { Nanny } from '../../types/nanny'
 import { useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import * as Yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm, Controller } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 
 interface AppointmentModalProps {
   onClose: () => void
@@ -14,16 +18,49 @@ interface AppointmentModalProps {
 interface FormProps {
   address: string
   phone: string
-  age: string
-  time: string
+  age: number
+  time: Date
   email: string
   name: string
   comment: string
 }
 
+const SubmitSchema = Yup.object().shape({
+  address: Yup.string()
+    .required('Address is required')
+    .matches(/[a-zA-Zа-яА-ЯіїєЇЄ]/, 'Address must contain at least one letter'),
+  phone: Yup.string()
+    .matches(/^\+380\d{9}$/, 'Phone must be in format +380XXXXXXXXX')
+    .required('Phone number is required'),
+  age: Yup.number()
+    .typeError('Age must be a number')
+    .positive('Age must be positive')
+    .integer('Age must be an integer')
+    .required('Age is required'),
+  time: Yup.date().required('Meeting time is required'),
+  email: Yup.string().email('Invalid email format').required('Email is required'),
+  name: Yup.string()
+    .matches(/^[a-zA-Z\sа-яА-ЯіїєЇЄ]+$/, 'Name can only contain letters')
+    .min(2, 'Name must be at least 2 characters')
+    .max(30, 'Name is too long')
+    .required('Name is required'),
+  comment: Yup.string().required('Comment is required'),
+})
+
 export default function AppointmentModal({ onClose, nanny }: AppointmentModalProps) {
-  const [selectedTime, setSelectedTime] = useState<Date | null>(new Date())
   const modalRef = useRef<HTMLDivElement | null>(null)
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormProps>({
+    resolver: yupResolver(SubmitSchema),
+    mode: 'onChange',
+    defaultValues: {
+      time: new Date(),
+    },
+  })
   const handleBackDropClick = (ev: MouseEvent<HTMLDivElement>) => {
     if (ev.target === ev.currentTarget) {
       onClose()
@@ -44,18 +81,9 @@ export default function AppointmentModal({ onClose, nanny }: AppointmentModalPro
     }
   }, [onClose])
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const form = e.currentTarget
-    const data = new FormData(form)
-    const { address, phone, age, time, email, name, comment } = Object.fromEntries(
-      data.entries(),
-    ) as unknown as FormProps
-    try {
-      // onClose()
-    } catch (error) {
-      console.log(error)
-    }
+  const onSubmit = () => {
+    toast.success('Meeting scheduled successfully!')
+    onClose()
   }
 
   return createPortal(
@@ -82,35 +110,98 @@ export default function AppointmentModal({ onClose, nanny }: AppointmentModalPro
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className={styles.formWrap}>
-            <input name="address" type="text" placeholder="Address" className={styles.input} />
-            <input name="phone" type="tel" placeholder="+380" className={styles.input} />
-            <input name="age" type="number" placeholder="Child's age" className={styles.input} />
-            <DatePicker
-              showIcon
-              icon={<img src="/clock.svg" alt="clock" />}
-              selected={selectedTime}
-              onChange={(date: Date | null) => {
-                setSelectedTime(date)
-              }}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={30}
-              timeCaption="Meeting time"
-              timeFormat="HH:mm"
-              dateFormat="HH:mm"
-              className={styles.input}
-              calendarClassName={styles.datePickerPopper}
-            />
-            <input type="hidden" name="time" value={selectedTime?.toLocaleTimeString() || ''} />
-            <input name="email" type="email" placeholder="Email" className={styles.input} />
-            <input
-              name="name"
-              type="text"
-              placeholder="Father's or mother's name"
-              className={styles.input}
-            />
-            <textarea name="comment" placeholder="Comment" rows={3} className={styles.textarea} />
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrap} noValidate>
+            {/* Address */}
+            <div>
+              <input
+                {...register('address')}
+                type="text"
+                placeholder="Address"
+                className={`${styles.input} ${errors.address ? styles.inputError : ''}`}
+              />
+              {errors.address && <p className={styles.error}>{errors.address.message}</p>}
+            </div>
+
+            {/* Phone */}
+            <div>
+              <input
+                {...register('phone')}
+                type="tel"
+                placeholder="+380"
+                className={`${styles.input} ${errors.phone ? styles.inputError : ''}`}
+              />
+              {errors.phone && <p className={styles.error}>{errors.phone.message}</p>}
+            </div>
+
+            {/* Age */}
+            <div>
+              <input
+                {...register('age', { valueAsNumber: true })}
+                type="number"
+                placeholder="Child's age"
+                className={`${styles.input} ${errors.age ? styles.inputError : ''}`}
+              />
+              {errors.age && <p className={styles.error}>{errors.age.message}</p>}
+            </div>
+
+            {/* Time (DatePicker) */}
+            <div>
+              <Controller
+                control={control}
+                name="time"
+                render={({ field }) => (
+                  <DatePicker
+                    showIcon
+                    icon={<img src="/clock.svg" alt="clock" />}
+                    selected={field.value}
+                    onChange={(date: Date | null) => field.onChange(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    timeFormat="HH:mm"
+                    dateFormat="HH:mm"
+                    className={`${styles.input} ${errors.time ? styles.inputError : ''}`}
+                    calendarClassName={styles.datePickerPopper}
+                  />
+                )}
+              />
+              {errors.time && <p className={styles.error}>{errors.time.message}</p>}
+            </div>
+
+            {/* Email */}
+            <div>
+              <input
+                {...register('email')}
+                type="email"
+                placeholder="Email"
+                className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
+              />
+              {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+            </div>
+
+            {/* Name */}
+            <div>
+              <input
+                {...register('name')}
+                type="text"
+                placeholder="Father's or mother's name"
+                className={`${styles.input} ${errors.name ? styles.inputError : ''}`}
+              />
+              {errors.name && <p className={styles.error}>{errors.name.message}</p>}
+            </div>
+
+            {/* Comment */}
+            <div style={{ gridColumn: 'span 2' }}>
+              <textarea
+                {...register('comment')}
+                placeholder="Comment"
+                rows={3}
+                className={`${styles.textarea} ${errors.comment ? styles.inputError : ''}`}
+              />
+              {errors.comment && <p className={styles.error}>{errors.comment.message}</p>}
+            </div>
+
             <button className={styles.sendBtn} type="submit">
               Send
             </button>
