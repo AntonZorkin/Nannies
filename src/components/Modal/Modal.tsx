@@ -2,6 +2,10 @@ import React, { useEffect, useLayoutEffect, useRef, useState, MouseEvent } from 
 import styles from './Modal.module.css'
 import { login, register } from '../../services/auth'
 import { User } from 'firebase/auth'
+import * as Yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 
 interface ModalProps {
   openModal: () => void
@@ -9,6 +13,36 @@ interface ModalProps {
   // eslint-disable-next-line no-unused-vars
   setUser: (user: User | null) => void
 }
+
+interface RegisterProps {
+  name: string
+  email: string
+  password: string
+}
+
+interface LoginProps {
+  email: string
+  password: string
+}
+
+const RegisterSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email format').required('Email is required'),
+  name: Yup.string()
+    .matches(/^[a-zA-Z\sа-яА-ЯіїєЇЄ]+$/, 'Name can only contain letters')
+    .min(2, 'Name must be at least 2 characters')
+    .max(30, 'Name is too long')
+    .required('Name is required'),
+  password: Yup.string()
+    .min(6, 'Password must be at least 6 characters')
+    .required('Password is required'),
+})
+
+const LogInSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email format').required('Email is required'),
+  password: Yup.string()
+    .min(6, 'Password must be at least 6 characters')
+    .required('Password is required'),
+})
 
 export default function Modal({ openModal, isRegister, setUser }: ModalProps) {
   const [passIsVisible, setPassIsVisible] = useState(false)
@@ -24,6 +58,15 @@ export default function Modal({ openModal, isRegister, setUser }: ModalProps) {
       openModal()
     }
   }
+
+  const {
+    register: registerField,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterProps | LoginProps>({
+    resolver: yupResolver(isRegister ? RegisterSchema : LogInSchema),
+  })
+
   useEffect(() => {
     const handleKeyDown = (ev: KeyboardEvent) => {
       if (ev.key === 'Escape') {
@@ -52,10 +95,8 @@ export default function Modal({ openModal, isRegister, setUser }: ModalProps) {
       const r = hero.getBoundingClientRect()
       const mw = modalEl.offsetWidth
       const mh = modalEl.offsetHeight
-
       const left = r.left + r.width / 2 - mw / 2
       const top = r.top + r.height / 2 - mh / 2
-
       setCoords({ left, top })
     }
 
@@ -69,21 +110,22 @@ export default function Modal({ openModal, isRegister, setUser }: ModalProps) {
     }
   }, [isRegister])
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const form = e.currentTarget
-    const data = new FormData(form)
-    const { email, password, name } = Object.fromEntries(data.entries()) as any
+  const onSubmit = async (values: RegisterProps | LoginProps) => {
     try {
       if (isRegister) {
+        const { email, password, name } = values as RegisterProps
         const user = await register(email, password, name)
         setUser(user)
+        toast.success('Registeration is successfull')
       } else {
+        const { email, password } = values
         const user = await login(email, password)
         setUser(user)
+        toast.success('Welcome back!')
       }
       openModal()
     } catch (error) {
+      toast.error('Something went wrong...')
       console.log(error)
     }
   }
@@ -108,18 +150,41 @@ export default function Modal({ openModal, isRegister, setUser }: ModalProps) {
             ? 'Thank you for your interest in our platform! In order to register, we need some information. Please provide us with the following information.'
             : 'Welcome back! Please enter your credentials to access your account and continue your babysitter search.'}
         </p>
-        <form className={styles.formWrap} onSubmit={handleSubmit}>
+        <form className={styles.formWrap} onSubmit={handleSubmit(onSubmit)}>
           {isRegister && (
-            <input className={styles.input} type="text" name="name" placeholder="Name" />
+            <>
+              <div className={styles.inputWrapper}>
+                <input
+                  className={styles.input}
+                  type="text"
+                  {...registerField('name')}
+                  placeholder="Name"
+                />
+                {(errors as any).name && (
+                  <p className={styles.error}>{(errors as any).name.message}</p>
+                )}
+              </div>
+            </>
           )}
-          <input className={styles.input} type="email" name="email" placeholder="Email" />
+
+          <div className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="email"
+              {...registerField('email')}
+              placeholder="Email"
+            />
+            {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+          </div>
+
           <div className={styles.passInputWrap}>
             <input
               className={styles.input}
               type={passIsVisible ? 'text' : 'password'}
-              name="password"
+              {...registerField('password')}
               placeholder="Password"
             />
+
             <button className={styles.iconBtn} type="button" onClick={visiblePass}>
               {passIsVisible ? (
                 <svg className={styles.icon}>
@@ -131,7 +196,9 @@ export default function Modal({ openModal, isRegister, setUser }: ModalProps) {
                 </svg>
               )}
             </button>
+            {errors.password && <p className={styles.error}>{errors.password.message}</p>}
           </div>
+
           <button className={styles.btn} type="submit">
             {isRegister ? 'Sign Up' : 'Log In'}
           </button>
