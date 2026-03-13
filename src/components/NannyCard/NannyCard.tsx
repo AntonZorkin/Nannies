@@ -43,7 +43,8 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
                 <p className={styles.vertical}>|</p>
               </div>
               <div className={styles.priceWrap}>
-                Price / 1 hour: <span className={styles.price}>{nanny.price_per_hour}$</span>
+                <p>Price / 1 hour: </p>
+                <p className={styles.price}>{nanny.price_per_hour}$</p>
               </div>
               <div className={styles.faviriteIcon}>
                 <svg width={22.65} height={20} className={styles.icon}>

@@ -84,8 +84,8 @@
   background-color: transparent;
   border: 1px solid rgba(206, 186, 186, 0.4);
   position: absolute;
-  top: 24px;
-  right: 12px;
+  top: 12px;
+  right: 10px;
   padding: 0;
   font-size: 32px;
 }
@@ -156,8 +156,8 @@
   }
 
   .closeBtn {
-    top: 40px;
-    right: 64px;
+    top: 16px;
+    right: 32px;
   }
 }
 

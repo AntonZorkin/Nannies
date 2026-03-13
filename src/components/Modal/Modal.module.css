@@ -143,21 +143,16 @@
   .title {
     font-size: 40px;
   }
-  .modalText {
-    width: 438px;
-  }
 
+  .modalText,
   .input,
-  .inputPass {
+  .inputPass,
+  .btn {
     width: 438px;
   }
 
   .iconBtn {
     background-color: transparent;
     border: none;
-  }
-
-  .btn {
-    width: 438px;
   }
 }
