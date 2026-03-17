@@ -7,7 +7,10 @@ const fetchNannies = async (): Promise<Nanny[]> => {
   const snapshot = await get(nanniesRef)
   if (snapshot.exists()) {
     const data = snapshot.val()
-    return Array.isArray(data) ? data : Object.values(data)
+    return Object.entries(data).map(([key, value]: [string, any]) => ({
+      ...value,
+      id: value.id || key,
+    }))
   }
   return []
 }

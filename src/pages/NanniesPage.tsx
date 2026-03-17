@@ -13,7 +13,6 @@ const NanniesPage = () => {
   useEffect(() => {
     const getData = async () => {
       const data = await fetchNannies()
-      console.log('Fetched data:', data)
       setNannies(data)
       setIsLoading(false)
     }

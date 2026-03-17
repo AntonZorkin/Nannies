@@ -116,6 +116,11 @@
   margin-left: 16px;
 }
 
+.faviriteBtn {
+  background-color: transparent;
+  border: none;
+}
+
 .nannyDetailsWrap {
   display: flex;
   flex-direction: column;
@@ -165,6 +170,11 @@
 .icon {
   fill: none;
   stroke: black;
+}
+
+.iconFavorite {
+  fill: var(--color-main);
+  stroke: var(--color-main);
 }
 
 .reviewerListWrap {

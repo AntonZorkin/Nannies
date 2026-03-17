@@ -3,13 +3,40 @@ import { Nanny } from '../../types/nanny'
 import styles from './NannyCard.module.css'
 import AppointmentModal from '../AppointmentModal/AppointmentModal'
 
-const NannyCard = ({ nanny }: { nanny: Nanny }) => {
+const NannyCard = ({
+  nanny,
+  onFavoriteToggle,
+}: {
+  nanny: Nanny
+  onFavoriteToggle?: () => void
+}) => {
   const [isReadMoreOpen, setIsReadMoreOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const ageCounter = () => {
     const years = new Date().getFullYear() - new Date(nanny.birthday).getFullYear()
     return years
   }
+
+  const [isFavorite, setIsFavorite] = useState(() => {
+    const saved = localStorage.getItem('favorite')
+    const favorites = saved ? JSON.parse(saved) : []
+    return favorites.includes(nanny.id)
+  })
+
+  const handleFavoriteClick = () => {
+    let favoriteList = localStorage.getItem('favorite')
+    let currentFavorites = JSON.parse(favoriteList || '[]')
+    if (!isFavorite) {
+      setIsFavorite(true)
+      currentFavorites = [...currentFavorites, nanny.id]
+    } else {
+      setIsFavorite(false)
+      currentFavorites = currentFavorites.filter((id: string) => id !== nanny.id)
+    }
+    localStorage.setItem('favorite', JSON.stringify(currentFavorites))
+    onFavoriteToggle?.()
+  }
+
   return (
     <>
       <div className={styles.cardWrap}>
@@ -47,9 +74,19 @@ const NannyCard = ({ nanny }: { nanny: Nanny }) => {
                 <p className={styles.price}>{nanny.price_per_hour}$</p>
               </div>
               <div className={styles.faviriteIcon}>
-                <svg width={22.65} height={20} className={styles.icon}>
-                  <use href="/sprite.svg#icon-heart" />
-                </svg>
+                <button
+                  className={styles.faviriteBtn}
+                  type="button"
+                  onClick={() => handleFavoriteClick()}
+                >
+                  <svg
+                    width={22.65}
+                    height={20}
+                    className={isFavorite ? styles.iconFavorite : styles.icon}
+                  >
+                    <use href="/sprite.svg#icon-heart" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
