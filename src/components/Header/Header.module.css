@@ -148,12 +148,11 @@
 
 @media (min-width: 768px) {
   .headerWrap {
-    width: 100%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    max-width: 1440px; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    margin: 0 auto; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
     height: 76px;
-    /* padding: 0 32px; */
-    padding: 0 32px; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    padding: 0 32px;
   }
 
   .burger svg {
@@ -175,37 +174,30 @@
 
   .headerWrap.public {
     margin-bottom: 0;
-    /* padding: 20px clamp(64px, 13.33vw - 96px, 96px);  */
   }
 
-  .headerWrap.public .deskNav .publicBtns {
-    transform: translateX(32px); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+  .headerWrap.public .deskNav .publicBtns,
+  .headerWrap.public .deskNav .privatBtns {
+    transform: translateX(32px);
   }
 
   .title {
     font-size: 24px;
   }
 
+  .headerWrap.public .title {
+    transform: translateX(-32px);
+  }
+
   .deskNav {
     display: flex;
     align-items: center;
-    /* width: 50%; */
-    /* padding-left: clamp(30px, 20vw - 210px, 70px); */
-    flex-grow: 1; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    justify-content: space-between; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    padding-left: 40px; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-  }
-
-  .deskNav.privat {
-    /* width: 100%; */
-    display: flex;
-    /* gap: clamp(100px, 58.5vw - 602px, 217px); */
-    /* justify-content: flex-end; */
+    flex-grow: 1;
+    justify-content: space-between;
   }
 
   .deskNav.public {
     justify-content: space-between;
-    background-color: transparent;
   }
 
   .burger {
@@ -214,11 +206,8 @@
 
   .navigation {
     display: flex;
-    position: static; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    left: calc(50vw); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    top: 50%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    transform: none; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    margin: 0 auto; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    position: static;
+    top: 50%;
     gap: 40px;
     font-weight: 400;
     font-size: 16px;
@@ -228,21 +217,19 @@
   }
 
   .headerWrap.privat .navigation {
-    position: absolute; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    left: 50%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    top: 50%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    transform: translate(-50%, -50%); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    margin: 0; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
   }
 
   .headerWrap.public .navigation {
-    position: absolute; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    left: calc(50% + 70px); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    top: 50%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    transform: translateY(-50%); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    margin: 0; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    margin-left: auto; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    margin-right: 48px; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    position: absolute;
+    left: calc(50% + 70px);
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
   }
 
   .publicBtns,
@@ -251,7 +238,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-shrink: 0; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    flex-shrink: 0;
   }
 
   .logInBtn {
@@ -266,6 +253,7 @@
     width: 168px;
     height: 48px;
     font-size: 16px;
+    border: 1px solid rgba(251, 251, 251, 0.4);
   }
 
   .logOutnBtn {
