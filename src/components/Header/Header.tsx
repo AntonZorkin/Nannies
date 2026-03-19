@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import styles from './Header.module.css'
 import { LayoutProps as HeaderProps } from '../../types/auth'
 import { useEffect, useState } from 'react'
@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal'
 import { logout } from '../../services/auth'
 
 export default function Header({ user, setUser }: HeaderProps) {
+  const { pathname } = useLocation()
   const navigate = useNavigate()
   const [barIsOpen, setBarIsOpen] = useState(false)
   function openBar() {
@@ -48,7 +49,9 @@ export default function Header({ user, setUser }: HeaderProps) {
   }
 
   return (
-    <header className={styles.headerWrap + ' ' + (user ? styles.privat : styles.public)}>
+    <header
+      className={styles.headerWrap + ' ' + (pathname !== '/' ? styles.privat : styles.public)}
+    >
       <NavLink to="/" className={styles.title}>
         Nanny.Services
       </NavLink>

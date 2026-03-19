@@ -1,120 +1,66 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import fetchNannies from '../services/nannies'
-import styles from '../styles/FavoritesPage.module.css'
+import styles from '../styles/NanniesPage.module.css'
 import { Nanny } from '../types/nanny'
 import NannyCard from '../components/NannyCard/NannyCard'
+import FilterNannies from '../components/FilterNannies/FilterNannies'
+import useSortedNannies from '../utils/sortNannies'
+import { User } from 'firebase/auth'
 
-const FavoritesPage = () => {
+const FavoritesPage = ({ user }: { user: User | null }) => {
   const [nannies, setNannies] = useState<Nanny[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [visibleCount, setVisibleCount] = useState(3)
   const [favorites, setFavorites] = useState<string[]>([])
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   useEffect(() => {
     const saved = localStorage.getItem('favorite')
     setFavorites(saved ? JSON.parse(saved) : [])
     const getData = async () => {
       const data = await fetchNannies()
-      console.log('Fetched data:', data)
       setNannies(data)
       setIsLoading(false)
     }
     getData()
   }, [])
   const [filter, setFilter] = useState('A to Z')
-  const filterOptions = [
-    'A to Z',
-    'Z to A',
-    'Less than 10$',
-    'Greater than 10$',
-    'Popular',
-    'Not popular',
-    'Show all',
-  ]
-  const sortNannies = useMemo(() => {
-    switch (filter) {
-      case 'A to Z':
-        return [...nannies].sort((a, b) => a.name.localeCompare(b.name))
 
-      case 'Z to A':
-        return [...nannies].sort((a, b) => b.name.localeCompare(a.name))
-
-      case 'Less than 10$':
-        return [...nannies].filter((nanny) => nanny.price_per_hour <= 10)
-
-      case 'Greater than 10$':
-        return [...nannies].filter((nanny) => nanny.price_per_hour > 10)
-
-      case 'Popular':
-        return [...nannies].sort((a, b) => b.rating - a.rating)
-
-      case 'Not popular':
-        return [...nannies].sort((a, b) => a.rating - b.rating)
-
-      default:
-        return nannies
-    }
-  }, [nannies, filter])
+  const sortNannies = useSortedNannies({ nannies, filter })
 
   const refreshFavorites = () => {
     const saved = localStorage.getItem('favorite')
     setFavorites(saved ? JSON.parse(saved) : [])
   }
 
-  console.log('Favorites IDs:', favorites)
-  console.log('Nannies from DB:', nannies)
-
   return (
     <div className={styles.container}>
-      <div className={styles.filters}>
-        <p className={styles.filtersText}>Filters</p>
+      <FilterNannies currentFilter={filter} onFilterChange={setFilter} />
 
-        <div className={styles.dropdownWrapper}>
-          <button
-            type="button"
-            className={styles.selectForm}
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            {filter}
-          </button>
-
-          {isDropdownOpen && (
-            <ul className={styles.selectPointsList}>
-              {filterOptions.map((option) => (
-                <li
-                  key={option}
-                  className={styles.selectPointItem}
-                  onClick={() => {
-                    setFilter(option)
-                    setIsDropdownOpen(false)
-                  }}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <ul className={styles.nanniesList}>
-          {sortNannies
-            .filter((nanny) => favorites.includes(nanny.id))
-            .slice(0, visibleCount)
-            .map((nanny) => {
-              return (
-                <NannyCard
-                  key={`${nanny.name}-${nanny.birthday}`}
-                  nanny={nanny}
-                  onFavoriteToggle={refreshFavorites}
-                />
-              )
-            })}
-        </ul>
+        <>
+          {sortNannies.filter((n) => favorites.includes(n.id)).length === 0 && (
+            <p>You haven't added any nannies to your favorites yet.</p>
+          )}
+          <ul className={styles.nanniesList}>
+            {sortNannies
+              .filter((nanny) => favorites.includes(nanny.id))
+              .slice(0, visibleCount)
+              .map((nanny) => {
+                return (
+                  <NannyCard
+                    key={`${nanny.name}-${nanny.birthday}`}
+                    nanny={nanny}
+                    user={user}
+                    onFavoriteToggle={refreshFavorites}
+                  />
+                )
+              })}
+          </ul>
+        </>
       )}
+      {/* {!isLoading&&favorites.includes(nanny.id)).length===0&&<p>You haven't added any nannies to your favorites yet.</p>}  */}
       {visibleCount < sortNannies.filter((nanny) => favorites.includes(nanny.id)).length && (
         <button
           className={styles.loadMoreBtn}

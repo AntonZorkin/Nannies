@@ -2,13 +2,17 @@ import { useState } from 'react'
 import { Nanny } from '../../types/nanny'
 import styles from './NannyCard.module.css'
 import AppointmentModal from '../AppointmentModal/AppointmentModal'
+import toast from 'react-hot-toast'
+import { User } from 'firebase/auth'
 
 const NannyCard = ({
   nanny,
   onFavoriteToggle,
+  user,
 }: {
   nanny: Nanny
   onFavoriteToggle?: () => void
+  user: User | null
 }) => {
   const [isReadMoreOpen, setIsReadMoreOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -24,17 +28,21 @@ const NannyCard = ({
   })
 
   const handleFavoriteClick = () => {
-    let favoriteList = localStorage.getItem('favorite')
-    let currentFavorites = JSON.parse(favoriteList || '[]')
-    if (!isFavorite) {
-      setIsFavorite(true)
-      currentFavorites = [...currentFavorites, nanny.id]
+    if (!user) {
+      toast.error('This functionality is available only for authorized users')
     } else {
-      setIsFavorite(false)
-      currentFavorites = currentFavorites.filter((id: string) => id !== nanny.id)
+      let favoriteList = localStorage.getItem('favorite')
+      let currentFavorites = JSON.parse(favoriteList || '[]')
+      if (!isFavorite) {
+        setIsFavorite(true)
+        currentFavorites = [...currentFavorites, nanny.id]
+      } else {
+        setIsFavorite(false)
+        currentFavorites = currentFavorites.filter((id: string) => id !== nanny.id)
+      }
+      localStorage.setItem('favorite', JSON.stringify(currentFavorites))
+      onFavoriteToggle?.()
     }
-    localStorage.setItem('favorite', JSON.stringify(currentFavorites))
-    onFavoriteToggle?.()
   }
 
   return (
@@ -82,7 +90,7 @@ const NannyCard = ({
                   <svg
                     width={22.65}
                     height={20}
-                    className={isFavorite ? styles.iconFavorite : styles.icon}
+                    className={isFavorite && user ? styles.iconFavorite : styles.icon}
                   >
                     <use href="/sprite.svg#icon-heart" />
                   </svg>
