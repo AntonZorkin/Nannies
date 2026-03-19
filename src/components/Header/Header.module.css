@@ -71,10 +71,12 @@
   bottom: 0;
   z-index: 15;
   width: 100%;
+  max-width: 768px;
   height: 100%;
   background-color: #fbfbfb;
   padding: 120px 20px;
   align-items: center;
+  margin: 0 auto;
 }
 
 .closeBtn {
@@ -84,8 +86,8 @@
   background-color: transparent;
   border: 1px solid rgba(206, 186, 186, 0.4);
   position: absolute;
-  top: 12px;
-  right: 10px;
+  top: 18px;
+  right: 18px;
   padding: 0;
   font-size: 32px;
 }
@@ -146,8 +148,12 @@
 
 @media (min-width: 768px) {
   .headerWrap {
+    width: 100%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    max-width: 1440px; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    margin: 0 auto; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     height: 76px;
-    padding: 0 32px;
+    /* padding: 0 32px; */
+    padding: 0 32px; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
   }
 
   .burger svg {
@@ -169,7 +175,11 @@
 
   .headerWrap.public {
     margin-bottom: 0;
-    padding: 20px clamp(64px, 13.33vw - 96px, 96px); /**/
+    /* padding: 20px clamp(64px, 13.33vw - 96px, 96px);  */
+  }
+
+  .headerWrap.public .deskNav .publicBtns {
+    transform: translateX(32px); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
   }
 
   .title {
@@ -179,15 +189,18 @@
   .deskNav {
     display: flex;
     align-items: center;
-    width: 50%;
-    padding-left: clamp(30px, 20vw - 210px, 70px);
+    /* width: 50%; */
+    /* padding-left: clamp(30px, 20vw - 210px, 70px); */
+    flex-grow: 1; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    justify-content: space-between; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    padding-left: 40px; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
   }
 
   .deskNav.privat {
-    width: 100%;
+    /* width: 100%; */
     display: flex;
-    gap: clamp(100px, 58.5vw - 602px, 217px);
-    justify-content: flex-end;
+    /* gap: clamp(100px, 58.5vw - 602px, 217px); */
+    /* justify-content: flex-end; */
   }
 
   .deskNav.public {
@@ -201,6 +214,11 @@
 
   .navigation {
     display: flex;
+    position: static; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    left: calc(50vw); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    top: 50%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    transform: none; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    margin: 0 auto; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     gap: 40px;
     font-weight: 400;
     font-size: 16px;
@@ -209,9 +227,31 @@
     color: #fbfbfb;
   }
 
-  .publicBtns {
+  .headerWrap.privat .navigation {
+    position: absolute; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    left: 50%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    top: 50%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    transform: translate(-50%, -50%); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    margin: 0; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+  }
+
+  .headerWrap.public .navigation {
+    position: absolute; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    left: calc(50% + 70px); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    top: 50%; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    transform: translateY(-50%); /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    margin: 0; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    margin-left: auto; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    margin-right: 48px; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+  }
+
+  .publicBtns,
+  .privatBtns {
+    margin-left: auto;
     display: flex;
+    align-items: center;
     gap: 8px;
+    flex-shrink: 0; /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
   }
 
   .logInBtn {

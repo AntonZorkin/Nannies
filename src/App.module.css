@@ -6,7 +6,6 @@
 
 .layoutPublic {
   width: 100%;
-  padding: 16px;
   overflow: hidden;
   position: relative;
   min-height: 100vh;
@@ -35,9 +34,6 @@ button {
 @media (min-width: 768px) {
   .container {
     max-width: 768px;
-  }
-  .layoutPublic {
-    padding: 32px;
   }
 }
 
