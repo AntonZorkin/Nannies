@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styles from '../styles/HomePage.module.css'
 
 const HomePage = ({ user }: { user: any }) => {
@@ -6,12 +7,12 @@ const HomePage = ({ user }: { user: any }) => {
       <div className={`${styles.heroLeft} ${user ? styles.privat : styles.public}`}>
         <h1 className={styles.title}>Make Life Easier for the Family:</h1>
         <p className={styles.heroText}>Find Babysitters Online for All Occasions</p>
-        <button className={styles.startBtn}>
+        <Link className={styles.startBtn} to="/nannies">
           Get started
           <svg width={14} height={16}>
             <use href="/sprite.svg#icon-arrow" />
           </svg>
-        </button>
+        </Link>
       </div>
       <div className={`${styles.heroRight} ${user ? styles.privat : styles.public}`}>
         <div className={styles.totalNannies}>

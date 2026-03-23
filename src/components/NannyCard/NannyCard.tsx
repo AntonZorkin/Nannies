@@ -156,6 +156,9 @@ const NannyCard = ({
               className={styles.readMoreBtn}
               type="button"
               onClick={() => {
+                if (!user) {
+                  return toast.error('This information is available only for authorized users')
+                }
                 setIsReadMoreOpen(true)
               }}
             >
