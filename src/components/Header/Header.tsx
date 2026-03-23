@@ -29,10 +29,12 @@ export default function Header({ user, setUser }: HeaderProps) {
   const [isRegister, setIsRegister] = useState(false)
 
   const handleOpenSignUp = () => {
+    setBarIsOpen(false)
     setIsRegister(true)
     setModalIsOpen(true)
   }
   const handleOpenLogIn = () => {
+    setBarIsOpen(false)
     setIsRegister(false)
     setModalIsOpen(true)
   }
@@ -44,7 +46,9 @@ export default function Header({ user, setUser }: HeaderProps) {
       setBarIsOpen(false)
       navigate('/')
     } catch (error) {
-      console.log(error)
+      if (import.meta.env.DEV) {
+        console.error('Error details:', error)
+      }
     }
   }
 
@@ -52,7 +56,7 @@ export default function Header({ user, setUser }: HeaderProps) {
     <header
       className={styles.headerWrap + ' ' + (pathname !== '/' ? styles.privat : styles.public)}
     >
-      <NavLink to="/" className={styles.title}>
+      <NavLink to="/" className={styles.title} aria-label="Nanny Services Home Page">
         Nanny.Services
       </NavLink>
       <div className={styles.deskNav + ' ' + (user ? styles.privat : styles.public)}>

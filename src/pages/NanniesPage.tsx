@@ -6,6 +6,7 @@ import styles from '../styles/NanniesPage.module.css'
 import FilterNannies from '../components/FilterNannies/FilterNannies'
 import useSortedNannies from '../utils/sortNannies'
 import { User } from 'firebase/auth'
+import { useSearchParams } from 'react-router-dom'
 
 const NanniesPage = ({ user }: { user: User | null }) => {
   const [nannies, setNannies] = useState<Nanny[]>([])
@@ -21,13 +22,17 @@ const NanniesPage = ({ user }: { user: User | null }) => {
     getData()
   }, [])
 
-  const [filter, setFilter] = useState('A to Z')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const filter = searchParams.get('sort') || 'A to Z'
+  const handleFilterChange = (newFilter: string) => {
+    setSearchParams({ sort: newFilter })
+  }
 
   const sortNannies = useSortedNannies({ nannies, filter })
 
   return (
     <div className={styles.container}>
-      <FilterNannies currentFilter={filter} onFilterChange={setFilter} />
+      <FilterNannies currentFilter={filter} onFilterChange={handleFilterChange} />
 
       {isLoading ? (
         <p>Loading...</p>

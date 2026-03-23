@@ -40,11 +40,12 @@ const SubmitSchema = Yup.object().shape({
   time: Yup.date().required('Meeting time is required'),
   email: Yup.string().email('Invalid email format').required('Email is required'),
   name: Yup.string()
+    .trim()
     .matches(/^[a-zA-Z\sа-яА-ЯіїєЇЄ]+$/, 'Name can only contain letters')
     .min(2, 'Name must be at least 2 characters')
     .max(30, 'Name is too long')
     .required('Name is required'),
-  comment: Yup.string().required('Comment is required'),
+  comment: Yup.string().trim().required('Comment is required'),
 })
 
 export default function AppointmentModal({ onClose, nanny }: AppointmentModalProps) {

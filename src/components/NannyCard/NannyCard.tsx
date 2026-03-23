@@ -16,9 +16,12 @@ const NannyCard = ({
 }) => {
   const [isReadMoreOpen, setIsReadMoreOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   const ageCounter = () => {
-    const years = new Date().getFullYear() - new Date(nanny.birthday).getFullYear()
-    return years
+    if (!nanny.birthday) return 'N/A'
+    const birthDate = new Date(nanny.birthday)
+    if (isNaN(birthDate.getTime())) return 'N/A'
+    return new Date().getFullYear() - birthDate.getFullYear()
   }
 
   const [isFavorite, setIsFavorite] = useState(() => {
@@ -167,7 +170,15 @@ const NannyCard = ({
           )}
         </div>
       </div>
-      {isModalOpen && <AppointmentModal nanny={nanny} onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <AppointmentModal
+          nanny={nanny}
+          onClose={() => {
+            setIsModalOpen(false)
+            setIsReadMoreOpen(false)
+          }}
+        />
+      )}
     </>
   )
 }

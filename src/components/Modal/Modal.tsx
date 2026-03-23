@@ -126,7 +126,9 @@ export default function Modal({ openModal, isRegister, setUser }: ModalProps) {
       openModal()
     } catch (error) {
       toast.error('Something went wrong...')
-      console.log(error)
+      if (import.meta.env.DEV) {
+        console.error('Error details:', error)
+      }
     }
   }
 

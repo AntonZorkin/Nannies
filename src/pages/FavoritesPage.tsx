@@ -6,6 +6,7 @@ import NannyCard from '../components/NannyCard/NannyCard'
 import FilterNannies from '../components/FilterNannies/FilterNannies'
 import useSortedNannies from '../utils/sortNannies'
 import { User } from 'firebase/auth'
+import { useSearchParams } from 'react-router-dom'
 
 const FavoritesPage = ({ user }: { user: User | null }) => {
   const [nannies, setNannies] = useState<Nanny[]>([])
@@ -23,9 +24,15 @@ const FavoritesPage = ({ user }: { user: User | null }) => {
     }
     getData()
   }, [])
-  const [filter, setFilter] = useState('A to Z')
 
-  const sortNannies = useSortedNannies({ nannies, filter })
+  const [searchParams, setSearchParams] = useSearchParams()
+  const filter = searchParams.get('sort') || 'A to Z'
+  const handleFilterChange = (newFilter: string) => {
+    setSearchParams({ sort: newFilter })
+  }
+
+  const favoriteNanniesOnly = nannies.filter((nanny) => favorites.includes(nanny.id))
+  const sortNannies = useSortedNannies({ nannies: favoriteNanniesOnly, filter })
 
   const refreshFavorites = () => {
     const saved = localStorage.getItem('favorite')
@@ -34,34 +41,28 @@ const FavoritesPage = ({ user }: { user: User | null }) => {
 
   return (
     <div className={styles.container}>
-      <FilterNannies currentFilter={filter} onFilterChange={setFilter} />
+      <FilterNannies currentFilter={filter} onFilterChange={handleFilterChange} />
 
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <>
-          {sortNannies.filter((n) => favorites.includes(n.id)).length === 0 && (
-            <p>You haven't added any nannies to your favorites yet.</p>
-          )}
+          {sortNannies.length === 0 && <p>You haven't added any nannies to your favorites yet.</p>}
           <ul className={styles.nanniesList}>
-            {sortNannies
-              .filter((nanny) => favorites.includes(nanny.id))
-              .slice(0, visibleCount)
-              .map((nanny) => {
-                return (
-                  <NannyCard
-                    key={`${nanny.name}-${nanny.birthday}`}
-                    nanny={nanny}
-                    user={user}
-                    onFavoriteToggle={refreshFavorites}
-                  />
-                )
-              })}
+            {sortNannies.slice(0, visibleCount).map((nanny) => {
+              return (
+                <NannyCard
+                  key={`${nanny.name}-${nanny.birthday}`}
+                  nanny={nanny}
+                  user={user}
+                  onFavoriteToggle={refreshFavorites}
+                />
+              )
+            })}
           </ul>
         </>
       )}
-      {/* {!isLoading&&favorites.includes(nanny.id)).length===0&&<p>You haven't added any nannies to your favorites yet.</p>}  */}
-      {visibleCount < sortNannies.filter((nanny) => favorites.includes(nanny.id)).length && (
+      {visibleCount < sortNannies.length && (
         <button
           className={styles.loadMoreBtn}
           type="button"
